@@ -1,0 +1,29 @@
+version: '3'
+services:
+  jupyter_notebook:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jupyter_notebook
+    working_dir: '/src'
+    tty: true
+    volumes:
+      - ./src:/src
+    ports: 
+      - '8888:8888'
+    command: jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root --NotebookApp.token=''
+
+  streamlit:
+    restart: always
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: streamlit
+    working_dir: '/src'
+    tty: true
+    volumes: 
+      - ./src:/src
+    ports: 
+      - '8501:8501'
+    command: streamlit run app.py
